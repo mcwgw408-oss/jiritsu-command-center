@@ -15,6 +15,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
 import './App.css'
+import { publicInitialData } from './data/publicInitialData'
 
 type SectionKey =
   | 'current'
@@ -57,7 +58,7 @@ type Draft = {
 }
 
 const storageKey = 'jiritsu-command-center-v1'
-const now = new Date().toISOString()
+const initialData: AppData = publicInitialData
 
 const sections: Array<{
   key: SectionKey
@@ -102,270 +103,6 @@ const sections: Array<{
     placeholder: '例: 分かったこと、次に試すこと、今日の管理へ渡すこと',
   },
 ]
-
-const initialData: AppData = {
-  version: 1,
-  settings: {
-    dashboardUrl: '',
-  },
-  items: [
-    {
-      id: 'current-state-1',
-      section: 'current',
-      title: '自立に向けた現在地',
-      body:
-        '将来的に、自分の収入で生活できる状態を目指している。\n\n今すぐ収益を急ぐ必要はなく、小さく試せる時間がある。\n\n発信、教材、人とのつながり、自作アプリなど、すでに材料はかなりある。\n\n今は「何もない」段階ではなく、持っているものを整理して試す段階。\n\n全部を一気にやらず、余白も残す。',
-      tags: ['現在地', '自立', '余白'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'asset-note',
-      section: 'assets',
-      title: 'note',
-      body: '通常記事。\nSubstack初心者向け記事。',
-      tags: ['発信場所', '記事'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'asset-substack',
-      section: 'assets',
-      title: 'Substack',
-      body:
-        '通常パブリケーション。\n虐待・過去を扱うパブリケーション。\nSubstack初心者向けパブリケーション。\n音声記事。\n購読者チャット。\nPodcast。\nライブ配信。\nNotes。',
-      tags: ['発信場所', '音声', 'コミュニケーション'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'asset-wordpress',
-      section: 'assets',
-      title: 'WordPress',
-      body:
-        'まだ育てている途中。\n\n現在の主な箱:\n・暮らしの道具箱: 自作アプリなどを置く予定\n・小さな実験: AIに投げたものがどう返ってきたか等の実験記録\n・概念辞典: 「仮説と検証」などの概念を置く',
-      tags: ['サイト', '育成中', '実験記録'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'asset-apps',
-      section: 'assets',
-      title: '自作アプリ',
-      body: '約25個。\n買い物、診察、PMDDなど、生活の困りごとから作ったものがある。',
-      tags: ['自作アプリ', '生活支援'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'asset-obsidian',
-      section: 'assets',
-      title: 'Obsidian',
-      body:
-        '過去に書いたブログのほぼすべてと、大量の記録がある。\n\n本人が全部把握するためではなく、必要なときAIが探し出す資料庫として使う。',
-      tags: ['資料庫', '過去記録', 'AI'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'asset-brain',
-      section: 'assets',
-      title: 'Brain',
-      body: 'マーケティング、スキル、アフィリエイト、その他、購入済みのものあり。',
-      tags: ['教材', 'マーケティング'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'asset-books',
-      section: 'assets',
-      title: '書籍・Kindle',
-      body: '多数あり。\n必要なテーマが出たときに参照する。',
-      tags: ['書籍', '参照'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'source-substamura',
-      section: 'sources',
-      title: 'サブスタ村コミュニティ',
-      body:
-        '役割: 必要なときに答えを探しに行く資料庫。\n\n中にあるもの:\n・実践書ライブラリー。公開済みPDFは既存ダッシュボードにも取り込み済み。今後追加される可能性あり。「今の悩みから探す」でテーマ別に探せる。\n・基本講座。現在53回まで。1本約2〜10分。商品づくり、欲しいものの聞き方、事前質問、事後質問、価格設定、企画名、コンセプトなどあり。\n・よしなりさん作成の手順書。\n\n使い方:\n必要になったときに探す。\n必要なPDF・動画・手順書だけ見る。\n1つだけ試す。\n結果を司令塔へ戻す。',
-      tags: ['資料庫', 'Substack', '実践書'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'source-viana',
-      section: 'sources',
-      title: 'ヴィアナさん',
-      body:
-        '役割: 自分では気づいていない強みや企画の可能性を外から見つけてくれる人。\n\n主な提案:\n・商業出版\n・Kindle\n・Substack×コミュニケーション\n・講座／テキスト教材\n・アプリ実演\n・モニターから有料化\n・コミュニティづくり\n\n詳細は別途Googleドキュメントに整理済み。',
-      tags: ['相談先', '企画', '強み'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'source-yoshida',
-      section: 'sources',
-      title: 'よしだ健康さんのメンバーシップ',
-      body:
-        'note: ほぼ毎日1記事追加。\nSubstack: ほぼ毎日更新。\nPodcast: ほぼ毎日更新。ただし一定期間後に見られなくなる可能性あり。\nX: あり。かなり長文の投稿もある。\nnoteの匿名質問ボックスで質問可能。\n\n役割: 現在進行形の実践を見る場所＋匿名で相談できる場所。\n全部追わず、必要なテーマがあるときに使う。',
-      tags: ['実践観察', '相談先', 'メンバーシップ'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'source-masahiro',
-      section: 'sources',
-      title: 'まさひろさんのメンバーシップ',
-      body:
-        'note: 不定期で追加。\n月1回セミナー。\n運営会議のような場あり。\n今後書いてほしいnoteやセミナー内容を提案可能。\n内容は比較的初心者向け。\nSubstack DMで自由に質問可能。\n上位プランでは月30分Zoom相談あり。\n\n役割: 気軽に具体的なことを質問できる相談先。\n特にKindle出版直後なので、実体験を聞く先として使える。',
-      tags: ['相談先', 'Kindle', '初心者向け'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-app-demo',
-      section: 'seeds',
-      title: 'みんなの困りごとからアプリを作る実演',
-      body: '困りごとを聞き、言葉にして、AIと一緒に小さなアプリへ形にする過程を見せる。',
-      tags: ['アプリ実演', 'AI', '困りごと'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-app-monitor',
-      section: 'seeds',
-      title: 'アプリの無料モニター',
-      body: 'まず無料で使ってもらい、どこに価値や引っかかりがあるかを見る。',
-      tags: ['モニター', '自作アプリ'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-app-paid',
-      section: 'seeds',
-      title: 'アプリの有料化',
-      body: '無料モニターや実演の反応を見てから、小さく有料化の形を考える。',
-      tags: ['有料化', '自作アプリ'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-substack-kindle',
-      section: 'seeds',
-      title: 'Substack×コミュニケーションのKindle',
-      body: 'Substackを単なる配信場所ではなく、読者との関係づくりとして扱うKindle案。',
-      tags: ['Substack', 'Kindle'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-commercial-book',
-      section: 'seeds',
-      title: '過去と現在の変化を扱う商業出版',
-      body: '過去の経験と、現在の変化・回復・実践を扱う出版案。',
-      tags: ['商業出版', '過去と現在'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-course',
-      section: 'seeds',
-      title: 'テキスト教材・講座',
-      body: 'いきなり大きく作らず、小さなテキストや短い講座として試す。',
-      tags: ['教材', '講座'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-place',
-      section: 'seeds',
-      title: '同じ経験をした人が集まれる場',
-      body: '似た経験を持つ人が安心して集まれる場の可能性。',
-      tags: ['場づくり', 'コミュニティ'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-substack-support',
-      section: 'seeds',
-      title: 'Substack初心者支援の発展',
-      body: 'すでにある初心者向け記事やパブリケーションを、支援や教材へ広げる可能性。',
-      tags: ['Substack', '初心者支援'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'seed-community',
-      section: 'seeds',
-      title: 'コミュニティづくり',
-      body: '発信、相談、実験、支援がゆるくつながる場の可能性。',
-      tags: ['コミュニティ', '長期案'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'experiment-app-demo',
-      section: 'experiments',
-      title: 'みんなの困りごとからアプリを作る実演',
-      body:
-        '仮説:\nプログラミングそのものではなく、困りごとを言葉にしてAIと一緒に形にする過程に価値があるのではないか。',
-      tags: ['準備中', 'アプリ実演', 'AI'],
-      links: [],
-      status: '準備中',
-      startDate: '',
-      reviewCue: '一度、事前に自分で実演用アプリを作り、実演の流れを整理できたら。',
-      updatedAt: now,
-    },
-    {
-      id: 'learning-1',
-      section: 'learnings',
-      title: '当たり前に見えることの価値',
-      body: '自分にとって当たり前のことが、他の人には価値として見えることがある。',
-      tags: ['価値', '強み'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'learning-2',
-      section: 'learnings',
-      title: 'すでにあるものを組み合わせる',
-      body: '全部を新しく作る必要はなく、すでにある発信場所や教材を組み合わせられる。',
-      tags: ['組み合わせ', '資産活用'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'learning-3',
-      section: 'learnings',
-      title: '必要なときに今ある情報を使う',
-      body: '新しい情報を集めるより、必要なときに今ある情報を使うことが大事。',
-      tags: ['情報源', '選択'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'learning-4',
-      section: 'learnings',
-      title: '商品は小さく試してから考える',
-      body: '商品は最初から決めず、小さく試して反応を見る。',
-      tags: ['実験', '商品化'],
-      links: [],
-      updatedAt: now,
-    },
-    {
-      id: 'learning-5',
-      section: 'learnings',
-      title: '司令塔と既存ダッシュボードの役割',
-      body: '司令塔で方向を見て、今日やることは既存ダッシュボードへ渡す。',
-      tags: ['運用', '既存ダッシュボード'],
-      links: [],
-      updatedAt: now,
-    },
-  ],
-}
 
 const emptyDraft: Draft = {
   section: 'current',
@@ -529,7 +266,7 @@ function App() {
   function restoreInitialData() {
     setData(initialData)
     resetForm('current')
-    setMessage('初期データに戻しました')
+    setMessage('空の公開用初期データに戻しました')
   }
 
   function exportJson() {
@@ -640,7 +377,7 @@ function App() {
         <div className="hero-actions">
           <button type="button" className="ghost-button" onClick={restoreInitialData}>
             <RefreshCw size={18} />
-            初期データに戻す
+            空の初期データに戻す
           </button>
           <button type="button" className="ghost-button" onClick={exportJson}>
             <Download size={18} />
@@ -812,66 +549,30 @@ function App() {
               </div>
             </article>
           )}
-          {!isSearching && sections.map((section) => {
-            const items = data.items.filter((item) => item.section === section.key)
-            return (
-              <article className="area" key={section.key}>
-                <div className="area-heading">
-                  <div>
-                    <h2>{section.title}</h2>
-                    <p>{section.note}</p>
-                  </div>
-                  <button type="button" className="icon-button" onClick={() => resetForm(section.key)}>
-                    <Plus size={18} />
-                  </button>
-                </div>
-
-                <div className="card-list">
-                  {items.length === 0 && <p className="empty">ここにまだ項目はありません。</p>}
-                  {items.map((item) => (
-                    <div className="item-card" key={item.id}>
-                      <div className="item-heading">
-                        <h3>{item.title}</h3>
-                        <div className="item-actions">
-                          <button type="button" className="icon-button" onClick={() => editItem(item)} aria-label={`${item.title}を編集`}>
-                            <Pencil size={16} />
-                          </button>
-                          <button type="button" className="icon-button danger" onClick={() => deleteItem(item.id)} aria-label={`${item.title}を削除`}>
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </div>
-                      {item.body && <p className="item-body">{item.body}</p>}
-                      {item.section === 'experiments' && (item.status || item.startDate || item.reviewCue) && (
-                        <div className="experiment-meta">
-                          {item.status && <span>状態: {item.status}</span>}
-                          {item.startDate && <span>開始: {formatDate(item.startDate)}</span>}
-                          {item.reviewCue && <span>見直し: {item.reviewCue}</span>}
-                        </div>
-                      )}
-                      {item.tags.length > 0 && (
-                        <div className="tag-row">
-                          {item.tags.map((tag) => (
-                            <span key={tag}>{tag}</span>
-                          ))}
-                        </div>
-                      )}
-                      {item.links.length > 0 && (
-                        <div className="link-list">
-                          {item.links.map((itemLink) => (
-                            <a key={itemLink} href={itemLink} target="_blank">
-                              <Link size={14} />
-                              {itemLink}
-                            </a>
-                          ))}
-                        </div>
-                      )}
+          {!isSearching &&
+            sections.map((section) => {
+              const items = data.items.filter((item) => item.section === section.key)
+              return (
+                <article className="area" key={section.key}>
+                  <div className="area-heading">
+                    <div>
+                      <h2>{section.title}</h2>
+                      <p>{section.note}</p>
                     </div>
-                  ))}
-                </div>
-              </article>
-            )
-          })}
+                    <button type="button" className="icon-button" onClick={() => resetForm(section.key)}>
+                      <Plus size={18} />
+                    </button>
+                  </div>
+
+                  <div className="card-list">
+                    {items.length === 0 && (
+                      <p className="empty">まだ項目はありません。JSONを読み込むか、新しく追加してください。</p>
+                    )}
+                    {items.map((item) => renderItemCard(item))}
+                  </div>
+                </article>
+              )
+            })}
         </section>
       </div>
     </main>

@@ -18,6 +18,8 @@ coverage
 .cache
 .tmp
 tmp
+backups/
+private-data/
 
 # Editor directories and files
 .vscode/*
